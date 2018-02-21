@@ -20,7 +20,7 @@ class Chatbar extends Component {
   onMessageKeyPress(event) {
     if (event.key === 'Enter') {
       const newMessage = {
-        id: Math.random(),
+        // id: 'id',
         type: 'user',
         username: this.state.username,
         content: this.state.messageText

@@ -13,7 +13,7 @@ class MessageList extends Component {
         );
       } else if (message.type === 'system') {
         return (
-          <div key={message.id} className="message system">
+          <div key='' className="message system">
             {message.content}
           </div>
         );

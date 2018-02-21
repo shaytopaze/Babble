@@ -8,47 +8,26 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: "Shay"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          id: 1,
-          type: 'user',
-          username: "Shay",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: 2,
-          type: 'user',
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
+      messages: [{type:'user', username: 'bob', content:'Welcome', id:'101'}] // messages coming from the server will be stored here
     };
   }
 
 
   componentDidMount() {
-
-
-  setTimeout(() => {
-    // console.log('Connected to server');
-    // console.log("Simulating incoming message");
-    // Add a new message to the list of messages in the data store
-    // const newMessage = {id: Math.random(), type: 'user', username: "Michelle", content: "Hello there!"};
-    // const messages = this.state.messages.concat(newMessage)
-    // Update the state of the app component.
-    // Calling setState will trigger a call to render() in App and all child components.
-    // this.setState({messages: messages})
-  }, 3000);
-}
-  newMessage(message) {
     this.socket = new WebSocket("ws://0.0.0.0:3001");
-    this.socket.onopen = (event) => {
-      console.log('Connected to server');
-      this.socket.send(JSON.stringify(message));
-    };
-      // const newMessage = this.state.messages;
-      // newMessage.push(message);
-      // this.setState({messages: newMessage});
+    this.socket.onmessage = (event) => {
+      //console.log(event.data);
+      var tempMessages = this.state.messages;
+      //add the new message
+      tempMessages.push(JSON.parse(event.data));
+      this.setState({messages: tempMessages});
+
+    }
+  }
+
+  newMessage(message) {
+    console.log(message);
+    this.socket.send(JSON.stringify(message));
   }
 
   render() {
@@ -65,6 +44,7 @@ class App extends Component {
 
 
 export default App;
+
 
 
 
