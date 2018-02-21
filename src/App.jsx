@@ -7,8 +7,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: "Shay"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [{type:'user', username: 'bob', content:'Welcome', id:'101'}] // messages coming from the server will be stored here
+      currentUser: 'Annon', // optional. if currentUser is not defined, it means the user is Anonymous
+      messages: [] // messages coming from the server will be stored here
     };
   }
 
@@ -25,8 +25,39 @@ class App extends Component {
     }
   }
 
+  changeUsername(newUsername) {
+    const previousName = this.state.currentUser;
+    this.setState({ currentUser: newUsername });
+    const systemMessage = {
+      type: 'system',
+      content: `${previousName} changed name to  ${newUsername}`
+    };
+
+    this.newMessage(systemMessage);
+  }
+
+  sendMessage(content) {
+    const message = {
+      type: 'user',
+      content: content,
+      username: this.state.currentUser
+    };
+
+    this.newMessage(message);
+  }
+
   newMessage(message) {
-    console.log(message);
+    // if (message.type === 'user') {
+    //   console.log(JSON.parse(message));
+    //   this.socket.send(JSON.stringify(message));
+    // } else if (message.type === 'system') {
+    //   // let systemMessage = {
+    //   //   type: message.type,
+    //   //   content: message.content
+    //   // }
+    //   this.socket.send(JSON.parse(message));
+    // }
+    console.log("IM MESSAGE", message);
     this.socket.send(JSON.stringify(message));
   }
 
@@ -36,7 +67,10 @@ class App extends Component {
       <div>
       <Navbar />
       <MessageList messages = {this.state.messages} />
-      <ChatBar username= {this.state.currentUser.name} newMessage = {this.newMessage.bind(this)} />
+      <ChatBar username= {this.state.currentUser.name}
+      newMessage= {this.newMessage.bind(this)}
+      sendMessage={this.sendMessage.bind(this)}
+      changeUsername={this.changeUsername.bind(this)} />
       </div>
     );
   }

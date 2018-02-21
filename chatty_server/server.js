@@ -31,7 +31,7 @@ wss.on('connection', (ws) => {
     //console.log(msg.username + " said: " + msg.content);
 
     wss.clients.forEach((client) => {
-      if ( client.readyState === WebSocket.OPEN) {
+      if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(msg));
       }
     });
