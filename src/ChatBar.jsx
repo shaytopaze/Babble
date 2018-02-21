@@ -20,29 +20,14 @@ class Chatbar extends Component {
 
   onUsernameKeyPress(event) {
     if (this.onUsernameChange && event.key === 'Enter') {
-      // const systemMessage = {
-      //   type: this.state.type,
-      //   content: this.props.username + " changed name to " + this.state.username
-      // }
-      // this.props.newMessage(systemMessage);
-      // this.setState({type: 'system'});
-
       this.props.changeUsername(this.state.username);
     }
+
     this.setState({type: 'user'});
   }
 
   onMessageKeyPress(event) {
     if (event.key === 'Enter') {
-      // const newMessage = {
-      //   // id: 'id',
-      //   type: this.state.type,
-      //   username: this.state.username,
-      //   content: this.state.messageText
-      // }
-      // this.props.newMessage(newMessage);
-      // this.setState({messageText: ' '});
-
       this.props.sendMessage(this.state.messageText);
       this.setState({messageText: ' '});
     }

@@ -18,17 +18,24 @@ const wss = new SocketServer({ server });
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
+let connectedClients = [];
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  let clientIsConnected = 'connected!';
+  let clientColour = ['#7FFFD4', '#8A2BE2', '#FF7F50', '#8FBC8F', ''];
+  connectedClients.push(clientIsConnected);
+  clientColour = clientColour[Math.floor(Math.random() * 4)];
+
+  wss.clients.forEach((client) => {
+  client.send(JSON.stringify(connectedClients));
+  })
 
   ws.on('message', function incoming(message) {
 
     let msg = JSON.parse(message);
     msg.id = uuidv4();
-    console.log(msg);
-
-    //console.log(msg.username + " said: " + msg.content);
+    msg.colour = clientColour;
 
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
@@ -37,7 +44,23 @@ wss.on('connection', (ws) => {
     });
   });
 
-
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () =>  {
+    console.log('Client disconnected')
+    connectedClients.shift();
+     wss.clients.forEach((client) => {
+      client.send(JSON.stringify(connectedClients));
+     })
+  });
 });
+
+
+
+
+
+
+
+
+
+
+

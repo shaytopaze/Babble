@@ -7,21 +7,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: 'Annon', // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [] // messages coming from the server will be stored here
+      currentUser: 'Anonymous', // optional. if currentUser is not defined, it means the user is Anonymous
+      messages: [], // messages coming from the server will be stored here
+      connectedClients: []
     };
   }
-
 
   componentDidMount() {
     this.socket = new WebSocket("ws://0.0.0.0:3001");
     this.socket.onmessage = (event) => {
-      //console.log(event.data);
-      var tempMessages = this.state.messages;
-      //add the new message
+      let tempMessages = this.state.messages;
       tempMessages.push(JSON.parse(event.data));
-      this.setState({messages: tempMessages});
-
+      const eventDataType = JSON.parse(event.data).type;
+      if (eventDataType === 'user' || eventDataType === 'system') {
+        this.setState({messages: tempMessages});
+        console.log(this.state);
+      } else {
+        const connectedClients = JSON.parse(event.data);
+        this.setState({connectedClients: connectedClients});
+      }
     }
   }
 
@@ -47,25 +51,15 @@ class App extends Component {
   }
 
   newMessage(message) {
-    // if (message.type === 'user') {
-    //   console.log(JSON.parse(message));
-    //   this.socket.send(JSON.stringify(message));
-    // } else if (message.type === 'system') {
-    //   // let systemMessage = {
-    //   //   type: message.type,
-    //   //   content: message.content
-    //   // }
-    //   this.socket.send(JSON.parse(message));
-    // }
-    console.log("IM MESSAGE", message);
     this.socket.send(JSON.stringify(message));
   }
 
   render() {
     console.log("Rendering <App />");
+    console.log("IM CONNECTED CLIENTS", this.state.connectedClients.length);
     return (
       <div>
-      <Navbar />
+      <Navbar connectedClients= {this.state.connectedClients.length} />
       <MessageList messages = {this.state.messages} />
       <ChatBar username= {this.state.currentUser.name}
       newMessage= {this.newMessage.bind(this)}
@@ -76,8 +70,11 @@ class App extends Component {
   }
 }
 
-
 export default App;
+
+
+
+
 
 
 
