@@ -45,6 +45,9 @@ class App extends Component {
   }
 
   sendMessage(username, content) {
+    if (username !== this.state.currentUser) {
+      this.changeUsername(username);
+    }
     const message = {
       type: 'user',
       content: content,
