@@ -10,10 +10,12 @@ class Chatbar extends Component {
     };
   }
 
+  // Listening if user types in username input
   onUsernameChange(event) {
     this.setState({username: event.target.value});
   }
 
+  // Listening if user types in message input
   onMessageTextChange(event) {
     this.setState({messageText: event.target.value});
   }
@@ -21,6 +23,7 @@ class Chatbar extends Component {
   onUsernameKeyPress(event) {
     if (this.onUsernameChange && event.key === 'Enter') {
       this.props.changeUsername(this.state.username);
+      // this.setState({username: ' '});
     }
 
     this.setState({type: 'user'});

@@ -1,6 +1,6 @@
 # Babble
 
-A chatting app that allows user to communicate with each other without having to register accounts. It uses React, a popular front-end library created and used heavily by Facebook as well as modern tools for Node including Webpack and Babel. <--- Hence the clever name ;)
+A chatting app that allows users to communicate with each other without having to register accounts. It uses React, a popular front-end library created and used heavily by Facebook as well as modern tools for Node including Webpack and Babel. <--- Hence the clever name ;)
 
 =====================
 

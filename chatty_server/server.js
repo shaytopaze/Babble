@@ -24,17 +24,22 @@ const messages = [];
 wss.on('connection', (ws) => {
   console.log('Client connected');
   let clientIsConnected = 'connected!';
-  let clientColour = ['#685C79', '#455C7B', '#DA727E', '#AC6C82', ''];
+  let clientColour = ['#685C79', '#455C7B', '#DA727E', '#AC6C82'];
   connectedClients.push(clientIsConnected);
+  // changed this
   clientColour = clientColour[Math.floor(Math.random() * 4)];
   let userID = uuidv4();
+  connectedClientsObject = {
+    connectedClients: connectedClients
+  }
 
   wss.clients.forEach((client) => {
-    client.send(JSON.stringify(connectedClients));
+    client.send(JSON.stringify({connectedClients: connectedClients}));
   })
 
+  ws.send(JSON.stringify({userID: userID}));
+
   ws.on('message', function incoming(message) {
-    console.log(wss.clients.id);
     let msg = JSON.parse(message);
     msg.id = uuidv4();
     msg.colour = clientColour;
