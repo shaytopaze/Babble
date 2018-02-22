@@ -7,8 +7,8 @@
     }
 
     .chatbar {
-      background: tomato;
-      border-top: 1px solid black;
+      background: #DA727E;
+      border-top: 1px solid #685C79;
       bottom: 0;
       display: flex;
       left: 0;
@@ -19,7 +19,7 @@
 
     .chatbar-message,
     .chatbar-username {
-      border: 1px solid black;
+      border: 1px solid #685C79;
       display: block;
       height: 40px;
       line-height: 40px;
@@ -41,6 +41,7 @@
     }
 
     .message.system {
+      color: #FFBC67;
       font-style: italic;
       padding: 5px 20px;
     }
@@ -62,8 +63,9 @@
     }
 
     .navbar {
-      background: tomato;
-      border-bottom: 1px solid black;
+      font-family: 'Comfortaa', cursive;
+      background: #DA727E;
+      border-bottom: 1px solid #685C79;
       height: 60px;
       left: 0;
       padding: 0 10px;
@@ -88,5 +90,14 @@
       float: right;
       padding: 10px;
 
+    }
+
+    img.image {
+      max-width: 60%;
+    }
+
+    i {
+      color: black;
+      padding-left: 10px;
     }
 

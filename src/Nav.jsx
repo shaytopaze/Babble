@@ -2,13 +2,21 @@ import React, {Component} from 'react';
 
 class Navbar extends Component {
   render() {
-    console.log("Rendering <Nav />");
-    return (
-      <nav className="navbar">
-        <a href="/" className="navbar-brand">Chatty</a>
-        <p> {this.props.connectedClients} users online </p>
-      </nav>
-    );
+    if (this.props.connectedClients <= 1) {
+      return (
+        <nav className="navbar">
+          <a href="/" className="navbar-brand">babble. <i className="fa fa-comments"></i></a>
+          <p>... you are currently the only one online <i className="fa fa-thumbs-down"></i></p>
+        </nav>
+      )
+    } else {
+      return (
+        <nav className="navbar">
+          <a href="/" className="navbar-brand">babble. <i className="fa fa-comments"></i></a>
+          <p> {this.props.connectedClients} friends are online! <i className="fa fa-thumbs-up"></i></p>
+        </nav>
+      );
+     }
   }
 }
 

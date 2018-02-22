@@ -16,10 +16,9 @@ class App extends Component {
   componentDidMount() {
     this.socket = new WebSocket("ws://0.0.0.0:3001");
     this.socket.onmessage = (event) => {
-      console.log("HEY IM EVENT", event);
       let tempMessages = this.state.messages;
       tempMessages.push(JSON.parse(event.data));
-      const eventData = JSON.parse(event.data);
+      let eventData = JSON.parse(event.data);
       if (eventData.type === 'user' || eventData.type === 'system') {
         this.setState({
           currentUser: eventData.username,
@@ -48,7 +47,7 @@ class App extends Component {
     if (username !== this.state.currentUser) {
       this.changeUsername(username);
     }
-    const message = {
+    let message = {
       type: 'user',
       content: content,
       username: username
@@ -62,8 +61,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("Rendering <App />");
-    console.log(this.state.messages);
     return (
       <div>
       <Navbar connectedClients= {this.state.connectedClients.length} />
