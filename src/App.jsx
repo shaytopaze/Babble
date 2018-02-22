@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: 'Anonymous', // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: '', // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [], // messages coming from the server will be stored here
       connectedClients: []
     };
@@ -37,7 +37,8 @@ class App extends Component {
     this.setState({ currentUser: newUsername });
     const systemMessage = {
       type: 'system',
-      content: `${previousName} changed name to  ${newUsername}`
+      content: `${previousName} changed name to  ${newUsername}`,
+      username: newUsername
     };
 
     this.newMessage(systemMessage);
