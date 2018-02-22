@@ -32,7 +32,7 @@ wss.on('connection', (ws) => {
   })
 
   ws.on('message', function incoming(message) {
-
+    console.log(message);
     let msg = JSON.parse(message);
     msg.id = uuidv4();
     msg.colour = clientColour;

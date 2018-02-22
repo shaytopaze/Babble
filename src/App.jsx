@@ -16,12 +16,15 @@ class App extends Component {
   componentDidMount() {
     this.socket = new WebSocket("ws://0.0.0.0:3001");
     this.socket.onmessage = (event) => {
+      console.log("HEY IM EVENT", event);
       let tempMessages = this.state.messages;
       tempMessages.push(JSON.parse(event.data));
-      const eventDataType = JSON.parse(event.data).type;
-      if (eventDataType === 'user' || eventDataType === 'system') {
-        this.setState({messages: tempMessages});
-        console.log(this.state);
+      const eventData = JSON.parse(event.data);
+      if (eventData.type === 'user' || eventData.type === 'system') {
+        this.setState({
+          currentUser: eventData.username,
+          messages: tempMessages});
+
       } else {
         const connectedClients = JSON.parse(event.data);
         this.setState({connectedClients: connectedClients});
@@ -40,11 +43,11 @@ class App extends Component {
     this.newMessage(systemMessage);
   }
 
-  sendMessage(content) {
+  sendMessage(username, content) {
     const message = {
       type: 'user',
       content: content,
-      username: this.state.currentUser
+      username: username
     };
 
     this.newMessage(message);
@@ -56,12 +59,12 @@ class App extends Component {
 
   render() {
     console.log("Rendering <App />");
-    console.log("IM CONNECTED CLIENTS", this.state.connectedClients.length);
+    console.log(this.state.messages);
     return (
       <div>
       <Navbar connectedClients= {this.state.connectedClients.length} />
       <MessageList messages = {this.state.messages} />
-      <ChatBar username= {this.state.currentUser.name}
+      <ChatBar username= {this.state.currentUser}
       newMessage= {this.newMessage.bind(this)}
       sendMessage={this.sendMessage.bind(this)}
       changeUsername={this.changeUsername.bind(this)} />
