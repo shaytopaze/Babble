@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: '', // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: 'Anonymous', // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [], // messages coming from the server will be stored here
       connectedClients: [],
       userID: ''
@@ -21,36 +21,32 @@ class App extends Component {
       let eventData = JSON.parse(event.data);
       // save unique userID to state
       this.setState({userID: eventData.userID});
+
       let tempMessages = this.state.messages;
       tempMessages.push(JSON.parse(event.data));
-      console.log("EVENTDATA USERNAME", eventData.username);
 
       if (eventData.type === 'user' || eventData.type === 'system') {
+        // Check if userID is equal to current user
         if (eventData.userID !== this.state.userID) {
-          // only update messages NOT username!
           this.setState({messages: tempMessages});
-          console.log("Im here!");
         }
-
         this.setState({
-          // currentUser: eventData.username,
-          messages: tempMessages
+        // Not sure why this needs to be here and be empty, but it does?
         });
+
       } else {
         // if eventData has connectedClients....
         if (eventData.connectedClients) {
-          const connectedClients = JSON.parse(event.data);
-          console.log("HEYHEYHEY", connectedClients);
+          // const connectedClients = JSON.parse(event.data);
           this.setState({connectedClients: eventData.connectedClients});
         }
       }
     }
   }
 
+
   changeUsername(newUsername) {
-    console.log("NEWUSERNAME", newUsername);
     const previousName = this.state.currentUser;
-    console.log("PREVIOUSNAME", previousName);
     this.setState({ currentUser: newUsername });
 
     const systemMessage = {
