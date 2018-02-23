@@ -12,8 +12,8 @@ No persistent database is involved; the focus is on the client-side experience
 
 ### Screenshots
 
-[!"Screenshot of Babble](https://github.com/shaytopaze/ChattyApp/blob/master/docs/Screen%20Shot%202018-02-23%20at%201.34.47%20PM.png?raw=true)
-[!"Second Screenshot of Babble"](https://github.com/shaytopaze/ChattyApp/blob/master/docs/Screen%20Shot%202018-02-23%20at%201.36.13%20PM.png?raw=true)
+!["Screenshot of Babble](https://github.com/shaytopaze/ChattyApp/blob/master/docs/Screen%20Shot%202018-02-23%20at%201.34.47%20PM.png?raw=true)
+!["Second Screenshot of Babble"](https://github.com/shaytopaze/ChattyApp/blob/master/docs/Screen%20Shot%202018-02-23%20at%201.36.13%20PM.png?raw=true)
 
 
 ### Usage
