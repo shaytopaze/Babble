@@ -2,23 +2,14 @@ import React, {Component} from 'react';
 
 class Navbar extends Component {
   render() {
-    if (this.props.connectedClients <= 1) {
-      // If you're the only one online - display this in the Nav bar!
       return (
         <nav className="navbar">
           <a href="/" className="navbar-brand">babble. <i className="fa fa-comments"></i></a>
-          <p>... you are currently the only one online <i className="fa fa-thumbs-down"></i></p>
-        </nav>
-      )
-    } else {
-      // If there is more than one online - display this in the Nav bar!
-      return (
-        <nav className="navbar">
-          <a href="/" className="navbar-brand">babble. <i className="fa fa-comments"></i></a>
-          <p> {this.props.connectedClients} friends are online! <i className="fa fa-thumbs-up"></i></p>
+         {this.props.connectedClients <= 1
+         ? <p>... you are currently the only one online <i className="fa fa-thumbs-down"></i></p>
+         : <p> {this.props.connectedClients} friends are online! <i className="fa fa-thumbs-up"></i></p> }
         </nav>
       );
-     }
   }
 }
 
