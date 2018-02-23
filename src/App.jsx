@@ -18,16 +18,12 @@ class App extends Component {
     this.socket.onmessage = (event) => {
       let eventData = JSON.parse(event.data);
 
-      let tempMessages = this.state.messages;
-      tempMessages.push(eventData);
-
-      // If data received is a MESSAGE...
+      // Checks if data received is a MESSAGE or connectedClients
       if (eventData.type === 'user' || eventData.type === 'system') {
-        // Not sure why this needs to be here and be empty, but it does?
-        this.setState({});
-      }
-      // If data received is the array of connectedClients...
-      if (eventData.connectedClients) {
+        this.setState({
+          messages: [...this.state.messages, eventData] // this.state.messages.concat(eventData)
+        });
+      } else if (eventData.connectedClients) {
         this.setState({connectedClients: eventData.connectedClients});
       }
     }
@@ -82,6 +78,7 @@ class App extends Component {
 }
 
 export default App;
+
 
 
 

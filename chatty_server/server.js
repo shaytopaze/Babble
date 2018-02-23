@@ -21,26 +21,26 @@ const wss = new SocketServer({ server });
 
 let connectedClients = [];
 const messages = [];
+let clientColours = ['#685C79', '#455C7B', '#DA727E', '#AC6C82', '#FF5349', '#18CDCA', '#4F80E1', '#292C44', '#8EB9A8', '#0B6887', '#17AEC2'];
 
 wss.on('connection', (ws) => {
   // Keep track of how many clients have connected
   let clientIsConnected = 'connected!';
   connectedClients.push(clientIsConnected);
-
   connectedClientsObject = {
     connectedClients: connectedClients
   }
+
+  // Receive message from client side, attach random colour and id
+  let clientColour = clientColours[Math.floor(Math.random() * 11)];
 
   // Send the array of connected clients to every client (to get the length on the client side)
   wss.clients.forEach((client) => {
     client.send(JSON.stringify({connectedClients: connectedClients}));
   })
 
-  // Receive message from client side, attach random colour and id
   ws.on('message', function incoming(message) {
   // Generate random colour to later assign to 'message'
-    let clientColour = ['#685C79', '#455C7B', '#DA727E', '#AC6C82', '#FF5349', '#18CDCA', '#4F80E1', '#292C44', '#8EB9A8', '#0B6887', '#17AEC2'];
-    clientColour = clientColour[Math.floor(Math.random() * 11)];
     let msg = JSON.parse(message);
     msg.id = uuidv4();
     msg.colour = clientColour;
