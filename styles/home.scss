@@ -8,7 +8,6 @@
 
     .chatbar {
       background: #DA727E;
-      border-top: 2px solid #685C79;
       bottom: 0;
       display: flex;
       left: 0;
@@ -20,6 +19,7 @@
     .chatbar-message,
     .chatbar-username {
       border: 2px solid #685C79;
+      border-radius: 5px;
       display: block;
       height: 40px;
       line-height: 40px;
@@ -51,6 +51,7 @@
       overflow: hidden;
       margin: 5px;
       padding: 0 10px;
+      overflow-wrap: break-word;
     }
 
     .message-content {
@@ -65,7 +66,6 @@
     .navbar {
       font-family: 'Comfortaa', cursive;
       background: #DA727E;
-      border-bottom: 2px solid #685C79;
       height: 60px;
       left: 0;
       padding: 0 10px;

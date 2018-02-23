@@ -18,32 +18,34 @@ const wss = new SocketServer({ server });
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
+
 let connectedClients = [];
 const messages = [];
 
 wss.on('connection', (ws) => {
-  console.log('Client connected');
+  // Keep track of how many clients have connected
   let clientIsConnected = 'connected!';
-  let clientColour = ['#685C79', '#455C7B', '#DA727E', '#AC6C82'];
   connectedClients.push(clientIsConnected);
-  // changed this
-  clientColour = clientColour[Math.floor(Math.random() * 4)];
-  let userID = uuidv4();
+  // Generate random colour to later assign to 'message'
+  let clientColour = ['#685C79', '#455C7B', '#DA727E', '#AC6C82', '#FF5349', '#18CDCA', '#4F80E1', '#292C44', '#8EB9A8', '#0B6887', '#17AEC2'];
+  clientColour = clientColour[Math.floor(Math.random() * 11)];
+
   connectedClientsObject = {
     connectedClients: connectedClients
   }
 
+  // Send the array of connected clients to every client (to get the length on the client side)
   wss.clients.forEach((client) => {
     client.send(JSON.stringify({connectedClients: connectedClients}));
   })
 
-  // ws.send(JSON.stringify({userID: userID}));
-
+  // Receive message from client side, attach random colour and id
   ws.on('message', function incoming(message) {
     let msg = JSON.parse(message);
     msg.id = uuidv4();
     msg.colour = clientColour;
 
+    // Send message with attached id & colour to client side
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(msg));
@@ -54,6 +56,7 @@ wss.on('connection', (ws) => {
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () =>  {
     console.log('Client disconnected')
+    // Every time a client disconnects, remove one from connectedClients array
     connectedClientsObject.connectedClients.shift();
     wss.clients.forEach((client) => {
       client.send(JSON.stringify({connectedClients:connectedClients}));

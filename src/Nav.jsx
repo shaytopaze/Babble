@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 class Navbar extends Component {
   render() {
     if (this.props.connectedClients <= 1) {
+      // If you're the only one online - display this in the Nav bar!
       return (
         <nav className="navbar">
           <a href="/" className="navbar-brand">babble. <i className="fa fa-comments"></i></a>
@@ -10,6 +11,7 @@ class Navbar extends Component {
         </nav>
       )
     } else {
+      // If there is more than one online - display this in the Nav bar!
       return (
         <nav className="navbar">
           <a href="/" className="navbar-brand">babble. <i className="fa fa-comments"></i></a>

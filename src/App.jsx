@@ -10,7 +10,6 @@ class App extends Component {
       currentUser: 'Anonymous', // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [], // messages coming from the server will be stored here
       connectedClients: [],
-      // userID: ''
     };
   }
 
@@ -18,34 +17,26 @@ class App extends Component {
     this.socket = new WebSocket("ws://0.0.0.0:3001");
     this.socket.onmessage = (event) => {
       let eventData = JSON.parse(event.data);
-      // save unique userID to state
-      // this.setState({userID: eventData.userID});
 
       let tempMessages = this.state.messages;
-      tempMessages.push(JSON.parse(event.data));
+      tempMessages.push(eventData);
 
+      // If data received is a MESSAGE...
       if (eventData.type === 'user' || eventData.type === 'system') {
-        // Check if userID is equal to current user
-        // if (eventData.userID !== this.state.userID) {
-        //   console.log("HEY IM NOT EQUAL");
-        //   this.setState({messages: tempMessages});
-        // }
-        this.setState({
         // Not sure why this needs to be here and be empty, but it does?
-        });
-
-      } else {
-        // if eventData has connectedClients....
-        if (eventData.connectedClients) {
-          // const connectedClients = JSON.parse(event.data);
-          this.setState({connectedClients: eventData.connectedClients});
-        }
+        this.setState({});
+      }
+      // If data received is the array of connectedClients...
+      if (eventData.connectedClients) {
+        this.setState({connectedClients: eventData.connectedClients});
       }
     }
   }
 
   changeUsername(newUsername) {
+    // save previous name in variable before setting username to changed username
     const previousName = this.state.currentUser;
+    // change username to updated username
     this.setState({ currentUser: newUsername });
 
     const systemMessage = {
@@ -71,6 +62,7 @@ class App extends Component {
     this.newMessage(message);
   }
 
+  // takes message and sends to server (either system or user message!)
   newMessage(message) {
     this.socket.send(JSON.stringify(message));
   }
@@ -90,6 +82,9 @@ class App extends Component {
 }
 
 export default App;
+
+
+
 
 
 

@@ -21,11 +21,17 @@ class Chatbar extends Component {
   }
 
   onUsernameKeyPress(event) {
+    // Conditions for setting username
     if (event.key === 'Enter' && event.target.value === '') {
-      alert("dont leave input empty, please type something before hitting enter!");
-      return;
+      alert("Please enter a username!");
     }
-    if (this.onUsernameChange && event.key === 'Enter') {
+    if ((event.target.value).length > 20) {
+      alert("Too many characters");
+      event.target.value = '';
+      this.setState({username: ''})
+    }
+    // If username has been changed properly - send username to changeUsername function!
+    if (this.onUsernameChange && event.key === 'Enter' && event.target.value !== '') {
       this.props.changeUsername(this.state.username);
     }
 
@@ -33,14 +39,18 @@ class Chatbar extends Component {
   }
 
   onMessageKeyPress(event) {
+    // Conditions for setting message
     if (this.state.username === '') {
       this.setState({username: 'Anonymous'});
-      // return;
+    }
+    if ((event.target.value).length > 140) {
+      alert("Too many characters");
+      return;
     }
     if (event.key === 'Enter' && event.target.value === '') {
-        alert('dont leave input empty, please type something before hitting enter!');
-        // return;
+        alert('Please enter a message!');
       }
+    // If message has been changed properly - send message to sendMessage function!
     if (event.key === 'Enter' && event.target.value !== '') {
       this.props.sendMessage(this.state.username, this.state.messageText);
       this.setState({messageText: ''});
