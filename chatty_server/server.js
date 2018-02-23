@@ -37,7 +37,7 @@ wss.on('connection', (ws) => {
     client.send(JSON.stringify({connectedClients: connectedClients}));
   })
 
-  ws.send(JSON.stringify({userID: userID}));
+  // ws.send(JSON.stringify({userID: userID}));
 
   ws.on('message', function incoming(message) {
     let msg = JSON.parse(message);

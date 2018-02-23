@@ -21,18 +21,29 @@ class Chatbar extends Component {
   }
 
   onUsernameKeyPress(event) {
+    if (event.key === 'Enter' && event.target.value === '') {
+      alert("dont leave input empty, please type something before hitting enter!");
+      return;
+    }
     if (this.onUsernameChange && event.key === 'Enter') {
       this.props.changeUsername(this.state.username);
-      // this.setState({username: ' '});
     }
 
     this.setState({type: 'user'});
   }
 
   onMessageKeyPress(event) {
-    if (event.key === 'Enter') {
+    if (this.state.username === '') {
+      this.setState({username: 'Anonymous'});
+      // return;
+    }
+    if (event.key === 'Enter' && event.target.value === '') {
+        alert('dont leave input empty, please type something before hitting enter!');
+        // return;
+      }
+    if (event.key === 'Enter' && event.target.value !== '') {
       this.props.sendMessage(this.state.username, this.state.messageText);
-      this.setState({messageText: ' '});
+      this.setState({messageText: ''});
     }
   }
 
@@ -57,4 +68,5 @@ class Chatbar extends Component {
 }
 
 export default Chatbar;
+
 

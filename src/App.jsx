@@ -10,26 +10,26 @@ class App extends Component {
       currentUser: 'Anonymous', // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [], // messages coming from the server will be stored here
       connectedClients: [],
-      userID: ''
+      // userID: ''
     };
   }
 
   componentDidMount() {
     this.socket = new WebSocket("ws://0.0.0.0:3001");
     this.socket.onmessage = (event) => {
-      console.log("EVENTDATA", JSON.parse(event.data));
       let eventData = JSON.parse(event.data);
       // save unique userID to state
-      this.setState({userID: eventData.userID});
+      // this.setState({userID: eventData.userID});
 
       let tempMessages = this.state.messages;
       tempMessages.push(JSON.parse(event.data));
 
       if (eventData.type === 'user' || eventData.type === 'system') {
         // Check if userID is equal to current user
-        if (eventData.userID !== this.state.userID) {
-          this.setState({messages: tempMessages});
-        }
+        // if (eventData.userID !== this.state.userID) {
+        //   console.log("HEY IM NOT EQUAL");
+        //   this.setState({messages: tempMessages});
+        // }
         this.setState({
         // Not sure why this needs to be here and be empty, but it does?
         });
@@ -43,7 +43,6 @@ class App extends Component {
       }
     }
   }
-
 
   changeUsername(newUsername) {
     const previousName = this.state.currentUser;
@@ -70,7 +69,6 @@ class App extends Component {
     };
 
     this.newMessage(message);
-    // this.setState({currentUser:username});
   }
 
   newMessage(message) {
@@ -92,6 +90,7 @@ class App extends Component {
 }
 
 export default App;
+
 
 
 
