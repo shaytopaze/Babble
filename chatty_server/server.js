@@ -20,14 +20,13 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 
 let connectedClients = [];
-const messages = [];
 let clientColours = ['#685C79', '#455C7B', '#DA727E', '#AC6C82', '#FF5349', '#18CDCA', '#4F80E1', '#292C44', '#8EB9A8', '#0B6887', '#17AEC2'];
 
 wss.on('connection', (ws) => {
   // Keep track of how many clients have connected
   let clientIsConnected = 'connected!';
   connectedClients.push(clientIsConnected);
-  connectedClientsObject = {
+  let connectedClientsObject = {
     connectedClients: connectedClients
   }
 
