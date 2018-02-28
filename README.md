@@ -25,7 +25,12 @@ No persistent database is involved; the focus is on the client-side experience
 
 ### Dependencies
 
+* Babel
+* CSS
+* Eslint
+* Express
 * React
+* React-DOM
+* Sass
 * Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* ws
